@@ -1,0 +1,12 @@
+services:
+  bot:
+    image: random-reminder-telegram-bot
+    container_name: random-reminder-telegram-bot
+    build: .
+    env_file:
+      - .env
+    environment:
+      - MESSAGES_FILE=/app/data/messages.json
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
