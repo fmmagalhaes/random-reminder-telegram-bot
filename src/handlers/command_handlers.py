@@ -74,10 +74,10 @@ async def list_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_list = "📝 **Stored Messages:**\n\n"
     for i, message in enumerate(messages, 1):
         # Truncate long messages for display
-        display_message = message[:50] + "..." if len(message) > 50 else message
-        message_list += f"{i} - {display_message}\n"
+        display_message = message[:200] + "..." if len(message) > 200 else message
+        message_list += f"{i} - {display_message}\n\n"
     
-    message_list += "\n🗑️ Use /delete <number> to delete a specific message"
+    message_list += "🗑️ Use /delete <number> to delete a specific message"
     
     await update.message.reply_text(message_list, parse_mode='Markdown')
     logger.info(f"Listed {len(messages)} messages for chat {chat_id}")
@@ -104,7 +104,7 @@ async def delete_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         # Show what we're deleting
         message_to_delete = messages[message_index]
-        display_message = message_to_delete[:100] + "..." if len(message_to_delete) > 100 else message_to_delete
+        display_message = message_to_delete[:500] + "..." if len(message_to_delete) > 500 else message_to_delete
         
         # Delete the message
         success = storage.delete_message_by_index(chat_id, message_index)
