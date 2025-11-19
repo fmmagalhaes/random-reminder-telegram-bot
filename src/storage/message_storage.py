@@ -40,10 +40,10 @@ class MessageStorage:
         if chat_key not in self.data:
             self.data[chat_key] = {
                 "messages": [],
-                "interval": 1,
                 "active": True,
                 "last_reminder_datetime": None,
-                "notification_time": None
+                "cron_expression": None,
+                "cron_text": None
             }
 
     def store_message(self, chat_id: int, message: Message):
@@ -84,33 +84,7 @@ class MessageStorage:
             logger.error(f"Error getting random message: {e}")
             return None
 
-    def get_chat_interval(self, chat_id: int) -> int:
-        try:
-            chat_key = str(chat_id)
 
-            if chat_key not in self.data:
-                return 1  # Default interval
-
-            return self.data[chat_key].get("interval", 1)
-
-        except Exception as e:
-            logger.error(f"Error getting chat interval: {e}")
-            return 1
-
-    def set_chat_interval(self, chat_id: int, interval: int) -> bool:
-        try:
-            chat_key = str(chat_id)
-
-            self._ensure_chat_data(chat_id)
-            self.data[chat_key]["interval"] = interval
-            self._save_data()
-
-            logger.info(f"Set interval for chat {chat_id} to {interval} days")
-            return True
-
-        except Exception as e:
-            logger.error(f"Error setting chat interval: {e}")
-            return False
 
     def get_chat_active_status(self, chat_id: int) -> bool:
         try:
@@ -170,31 +144,7 @@ class MessageStorage:
             logger.error(f"Error setting last reminder datetime: {e}")
             return False
 
-    def get_chat_notification_time(self, chat_id: int) -> Optional[str]:
-        try:
-            chat_key = str(chat_id)
-            if chat_key in self.data:
-                return self.data[chat_key].get("notification_time")
-            return None
-        except Exception as e:
-            logger.error(f"Error getting notification time: {e}")
-            return None
 
-    def set_chat_notification_time(self, chat_id: int, time_str: str) -> bool:
-        # time_str should be in HH:MM format
-        try:
-            chat_key = str(chat_id)
-
-            self._ensure_chat_data(chat_id)
-            self.data[chat_key]["notification_time"] = time_str
-            self._save_data()
-
-            logger.info(f"Set notification time for chat {chat_id} to {time_str}")
-            return True
-
-        except Exception as e:
-            logger.error(f"Error setting notification time: {e}")
-            return False
 
     def get_all_messages(self, chat_id: int) -> list:
         try:
@@ -261,6 +211,58 @@ class MessageStorage:
             
         except Exception as e:
             logger.error(f"Error clearing all messages: {e}")
+            return False
+
+    def get_chat_cron_expression(self, chat_id: int) -> Optional[str]:
+        try:
+            chat_key = str(chat_id)
+            if chat_key in self.data:
+                return self.data[chat_key].get("cron_expression")
+            return None
+        except Exception as e:
+            logger.error(f"Error getting cron expression: {e}")
+            return None
+
+    def set_chat_cron_expression(self, chat_id: int, cron_expression: str) -> bool:
+        try:
+            chat_key = str(chat_id)
+
+            self._ensure_chat_data(chat_id)
+            self.data[chat_key]["cron_expression"] = cron_expression
+            self._save_data()
+
+            logger.info(f"Set cron expression for chat {chat_id} to {cron_expression}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Error setting cron expression: {e}")
+            return False
+
+    def get_chat_cron_text(self, chat_id: int) -> Optional[str]:
+        try:
+            chat_key = str(chat_id)
+            if chat_key in self.data:
+                return self.data[chat_key].get("cron_text")
+            return None
+        except Exception as e:
+            logger.error(f"Error getting cron text: {e}")
+            return None
+
+    def set_chat_cron(self, chat_id: int, cron_expression: str, cron_text: str) -> bool:
+        """Set both cron expression and original text in one operation."""
+        try:
+            chat_key = str(chat_id)
+
+            self._ensure_chat_data(chat_id)
+            self.data[chat_key]["cron_expression"] = cron_expression
+            self.data[chat_key]["cron_text"] = cron_text
+            self._save_data()
+
+            logger.info(f"Set cron for chat {chat_id}: '{cron_text}' -> {cron_expression}")
+            return True
+
+        except Exception as e:
+            logger.error(f"Error setting cron: {e}")
             return False
 
 
