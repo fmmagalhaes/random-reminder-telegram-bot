@@ -245,7 +245,6 @@ class ChatRepository:
             return None
 
     def set_chat_cron(self, chat_id: int, cron_expression: str, cron_text: str) -> bool:
-        """Set both cron expression and original text in one operation."""
         try:
             chat_key = str(chat_id)
 
