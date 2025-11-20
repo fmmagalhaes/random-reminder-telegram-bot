@@ -69,6 +69,9 @@ python bot.py
    - "Daily at 9:00 PM"
    - "Every weekday at noon"
    - "Every 2 hours"
+  
+### Example
+<img height="720" alt="image" src="https://github.com/user-attachments/assets/6943a4c2-bbcb-4500-944c-138df2bd076d" />
 
 ## Storage
 
