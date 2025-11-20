@@ -54,8 +54,7 @@ python bot.py
 - `/start` - Start the bot and enable random reminders
 - `/stop` - Stop random reminders for this chat
 - `/remind` - Get a random message immediately
-- `/interval` - Set reminder interval
-- `/time` - Set notification time
+- `/schedule` - Set reminder schedule
 - `/list` - Show all stored messages
 - `/delete <number>` - Delete a specific message
 - `/clear` - Delete all stored messages
@@ -65,7 +64,11 @@ python bot.py
 1. Add the bot to your chat or group
 2. Send `/start` to activate the bot
 3. Start chatting! The bot will collect all text messages
-4. Every day, the bot will send a random message from the chat history
+4. Use `/schedule` to customize when reminders are sent using natural language:
+   - "Every monday at 3am"
+   - "Daily at 9:00 PM"
+   - "Every weekday at noon"
+   - "Every 2 hours"
 
 ## Storage
 
