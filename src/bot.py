@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ConversationHandler
 from dotenv import load_dotenv
-from storage.message_storage import storage
+from storage.chat_repository import storage
 from helpers.logger import setup_logger
 
 # Import handlers

@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
-from storage.message_storage import storage
+from storage.chat_repository import storage
 from helpers.logger import get_logger
 from helpers.auth_wrapper import execute_with_authentication
 

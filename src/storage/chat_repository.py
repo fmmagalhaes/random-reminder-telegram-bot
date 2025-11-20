@@ -12,7 +12,7 @@ logger = get_logger()
 DATETIME_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
-class MessageStorage:
+class ChatRepository:
     def __init__(self, json_file_path: str):
         self.json_file = json_file_path
         self.data = self._load_data()
@@ -84,8 +84,6 @@ class MessageStorage:
             logger.error(f"Error getting random message: {e}")
             return None
 
-
-
     def get_chat_active_status(self, chat_id: int) -> bool:
         try:
             chat_key = str(chat_id)
@@ -143,8 +141,6 @@ class MessageStorage:
         except Exception as e:
             logger.error(f"Error setting last reminder datetime: {e}")
             return False
-
-
 
     def get_all_messages(self, chat_id: int) -> list:
         try:
@@ -281,4 +277,4 @@ def get_messages_file_path():
     return str(data_dir / "messages.json")
 
 MESSAGES_FILE = get_messages_file_path()
-storage = MessageStorage(MESSAGES_FILE)
+storage = ChatRepository(MESSAGES_FILE)
