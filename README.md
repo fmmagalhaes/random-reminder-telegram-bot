@@ -75,4 +75,4 @@ python bot.py
 
 ## Storage
 
-The bot uses a simple JSON file to store messages and chat configs locally in `messages.json`.
+The bot stores messages and chat configs locally in `messages.json`.
